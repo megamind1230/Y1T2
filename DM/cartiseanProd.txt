@@ -1,0 +1,37 @@
+// cartisean prod
+
+#include <iostream>
+#include <vector>
+using namespace std;
+#define en cout<<'\n';
+using ll = long long;
+
+void cartiseanAB(int m, int *A, int n, int *B) 
+{
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cout << "( " << A[i] << " , " << B[j]<<" )\n";
+		}
+	}
+}
+
+int main()
+{
+	cout << "set A size ";
+	int m; cin >> m;
+	int* A = new int [m];
+	for (int i = 0; i < m; i++)
+	{
+		cin >> A[i];
+	}
+	cout << "set B size ";
+	int n; cin >> n;
+	int* B = new int [n];
+	for (int i = 0; i < n; i++)
+	{
+		cin >> B[i];
+	}
+	cartiseanAB(m, A, n, B);
+}

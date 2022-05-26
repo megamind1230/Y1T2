@@ -1,0 +1,39 @@
+// permu & combinations
+
+#include <iostream>
+using namespace std;
+#define en cout<<'\n';
+using ll = long long;
+ll fact(int x)
+{
+	ll fact=1;
+	for (int a = 2; a <= x; a++)// didn't start from 1 as it's redundant
+	{
+		fact *= a;
+	}
+	return fact;
+}
+ll permu(ll n, ll m) {
+	if (n >= m)
+		return (fact(n) / fact(n - m));
+	else
+		cout << "m is bigger ?????!\n"; exit(-1);
+}
+ll combi(ll n, ll m)
+{
+	if (n >= m)
+		return (permu(n,m)/fact(m));
+	else
+		cout << "m is bigger ?????!\n"; exit(-1);
+}
+int main()
+{
+
+	ll n, m;
+	cin >> n >> m;
+	cout << "permutation...\n";
+	cout<<permu(n, m); en
+	cout << "combination...\n";
+	cout<<combi(n, m); en
+	
+}

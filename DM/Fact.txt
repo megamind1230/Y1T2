@@ -1,0 +1,13 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	long long  fact = 1;
+	int n;
+	cin >> n;
+	for (int a = 2; a <= n; a++)// didn't start from 1 as it's redundant
+	{
+		fact *= a;
+	}
+	cout << fact << endl;
+}

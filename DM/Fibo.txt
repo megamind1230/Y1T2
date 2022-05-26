@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    int N; cin >> N;
+    if (N == 1)
+        cout << 0;
+    else
+    {
+        int fab1 = 0, fab2 = 1, fab3 = 0;
+        cout << fab1 << " " << fab2 << " ";
+        for (int a = 3; a <= N; a++)
+        {
+            fab3 = fab2 + fab1;
+            cout << fab3 << " ";
+            fab1 = fab2;
+            fab2 = fab3;
+
+        }
+    }
+}
