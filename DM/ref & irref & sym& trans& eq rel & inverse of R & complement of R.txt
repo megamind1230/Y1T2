@@ -1,0 +1,285 @@
+// ref & irref & sym& trans& eq rel & inverse of R & complement of R
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+#define en <<'\n';
+using ll = long long;
+bool** GetBoolProd(int m, int n, bool** a, int x, int y, bool** b)
+{
+	if (n != x)
+	{
+		cout << "not compatible\n";
+		exit(-1);
+	}
+	else
+	{
+		// init
+		bool** BoolProd = new bool* [m];
+		for (int i = 0; i < y; i++)
+		{
+			BoolProd[i] = new bool(0);
+		}
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < y; j++)
+			{
+				BoolProd[i][j] = 0;
+			}
+			cout << '\n';
+		}
+		// set
+		for (int i = 0; i < m; i++)
+		{
+			for (int j = 0; j < y; j++)
+			{
+
+				for (int k = 0; k < m; k++)
+				{
+					BoolProd[i][j] += a[i][k] * b[k][j];
+				}
+			}
+		}
+		return BoolProd;
+		//// print
+		//for (int i = 0; i < n; i++)
+		//{
+		//	for (int j = 0; j < y; j++)
+		//	{
+		//		cout << BoolProd[i][j] << ' ';
+		//	}
+		//	cout << '\n';
+		//}
+	}
+}
+
+bool refl(int n, bool** MR)
+{
+	int cntr = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (i == j && MR[i][j] == 1)
+				cntr++;
+		}
+	}
+	return (cntr == n);
+}
+
+bool irref(int n, bool** MR)
+{
+	int cntr = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (i == j && MR[i][j] == 0)
+				cntr++;
+		}
+	}
+	return (cntr == n);
+}
+
+bool sym(int n, bool** MR)
+{
+	// init MO
+	bool** MO = new bool* [n];
+	for (int i = 0; i < n; i++)
+	{
+		MO[i] = new bool(0);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			MO[i][j] = 0;
+		}
+	}
+	// set MO to the transpose of MR
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			MO[i][j] = MR[j][i];
+		}
+	}
+	// check equality
+	bool flag = 1;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+
+			if (MR[i][j] != MO[i][j])
+			{
+				flag = 0;
+			}
+		}
+
+	}
+	return (flag);
+}
+
+bool trans(int n, bool** MR)
+{
+	// init MT
+	bool** MT = new bool* [n];
+	for (int i = 0; i < n; i++)
+	{
+		MT[i] = new bool(0);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			MT[i][j] = 0;
+		}
+	}
+
+	// set MT to MR^2
+	MT = GetBoolProd(n, n, MR, n, n, MR);
+	// check equality
+	bool flag = 1;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+
+			if (MR[i][j] != MT[i][j])
+			{
+				flag = 0;
+			}
+		}
+
+	}
+	return flag;
+	
+
+}
+
+bool eqRel(int n, bool** MR)
+{
+	return (refl(n, MR) && sym(n, MR) && trans(n, MR));
+}
+
+void PrintInverse(int n, bool** MR)
+{
+
+	//print
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cout << MR[j][i] << ' ';
+		}
+		cout << '\n';
+	}
+}
+
+void PrintCompl(int n, bool** MR)
+{
+	// inverse
+	for (int i = 0; i < n ; i++)
+	{
+		for (int j = 0; j < n ; j++)
+		{
+			if (MR[i][j] == 1)
+			{
+				MR[i][j] = 0;
+			}
+			else
+			{
+				MR[i][j] = 1;
+			}
+		}
+	}
+	//print
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cout << MR[i][j] << ' ';
+		}
+		cout << '\n';
+	}
+}
+
+
+int main(void)
+{
+	// init
+	cout << "enter MR size n*n";
+	int n; cin >> n;
+	bool** MR = new bool* [n];
+	for (int i = 0; i < n; i++)
+	{
+		MR[i] = new bool(0);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			MR[i][j] = 0;
+		}
+	}
+	// get
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cin>>MR[i][j] ;
+		}
+	}
+
+	//int* MR = new int[n];
+	//int* MR = new int[n];
+	cout << "[1]ref ?\n";
+	cout << "[2]irref ?\n";
+	cout << "[3]sym ?\n";
+	cout << "[4]trans ?\n";
+	cout << "[5]eq rel ?\n";
+	cout << "[6]inverse \n";
+	cout << "[7]compl \n";
+	int choice; cin >> choice;
+	switch (choice)
+	{
+	case 1:
+	{
+		cout<<refl(n, MR) en
+		break;
+	}case 2:
+	{
+		cout<<irref(n, MR) en
+		break;
+	}case 3:
+	{
+		cout<<sym(n, MR) en
+		break;
+	}case 4:
+	{
+		cout<<trans(n, MR) en
+		break;
+	}case 5:
+	{
+		cout<<eqRel(n, MR) en
+		break;
+	}case 6:
+	{
+		PrintInverse(n, MR);
+		break;
+	}
+	case 7:
+	{
+		PrintCompl(n, MR);
+		break;
+	}
+	default:
+	{
+		cout << "No such choice !\n";
+		exit(-1);
+	}
+	}
+	main();
+}
